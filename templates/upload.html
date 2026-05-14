@@ -1,0 +1,107 @@
+{% extends './base.html' %} {% load static %} {% block content %}
+
+<section class="upload-section">
+  <!-- GLOW EFFECTS -->
+
+  <div class="upload-glow glow-left"></div>
+  <div class="upload-glow glow-right"></div>
+
+  <!-- AI LOADER -->
+
+  <div class="ai-loader d-none" id="aiLoader">
+    <div class="loader-box">
+      <div class="loader-ring"></div>
+
+      <h2>AI Resume Analysis</h2>
+
+      <div class="loader-steps">
+        <p>Uploading Resume...</p>
+        <p>Extracting Skills...</p>
+        <p>Analyzing ATS Score...</p>
+        <p>Generating AI Insights...</p>
+        <p>Preparing Dashboard...</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="upload-wrapper">
+      <div class="row align-items-center">
+        <!-- LEFT SIDE -->
+
+        <div class="col-lg-6">
+          <div class="upload-content">
+            <span class="upload-badge"> AI Resume Scanner </span>
+
+            <h1>Upload Your Resume & Get Instant AI Insights</h1>
+
+            <p>
+              Analyze ATS compatibility, detect skills, receive AI-powered
+              improvements, and optimize your resume for recruiters.
+            </p>
+
+            <div class="feature-list">
+              <div>
+                <i class="fa-solid fa-circle-check"></i>
+                ATS Score Analysis
+              </div>
+
+              <div>
+                <i class="fa-solid fa-circle-check"></i>
+                Skill Detection
+              </div>
+
+              <div>
+                <i class="fa-solid fa-circle-check"></i>
+                AI Suggestions
+              </div>
+
+              <div>
+                <i class="fa-solid fa-circle-check"></i>
+                Role Prediction
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT SIDE -->
+
+        <div class="col-lg-6">
+          <div class="upload-card">
+            <h2>Upload Resume</h2>
+
+            <form method="POST" enctype="multipart/form-data" id="uploadForm">
+              {% csrf_token %}
+
+              <div class="drop-area">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                <h4>Drag & Drop Resume</h4>
+
+                <p>Upload PDF Resume</p>
+
+                <input type="file" name="resume" required />
+              </div>
+
+              <button type="submit" class="analyze-btn">Analyze Resume</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById("uploadForm");
+
+  const loader = document.getElementById("aiLoader");
+
+  form.addEventListener("submit", function () {
+    loader.classList.remove("d-none");
+
+    loader.style.display = "flex";
+  });
+</script>
+
+{% endblock %}

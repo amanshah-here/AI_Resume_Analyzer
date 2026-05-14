@@ -1,0 +1,174 @@
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="../static/js/script.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+    var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+    var toastList = toastElList.map(function (toastEl) {
+        return new bootstrap.Toast(toastEl, { delay: 5000 })
+    })
+    toastList.forEach(toast => toast.show())
+})
+    </script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- MDB -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/9.3.0/mdb.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+<script>
+
+particlesJS("particles-js", {
+
+  particles: {
+
+    number: {
+      value: 120,
+      density: {
+        enable: true,
+        value_area: 900
+      }
+    },
+
+    color: {
+      value: "#38bdf8"
+    },
+
+    shape: {
+      type: "circle"
+    },
+
+    opacity: {
+      value: 0.7,
+      random: true
+    },
+
+    size: {
+      value: 4,
+      random: true
+    },
+
+    line_linked: {
+      enable: true,
+      distance: 170,
+      color: "#38bdf8",
+      opacity: 0.45,
+      width: 1.3
+    },
+
+    move: {
+      enable: true,
+      speed: 2,
+      direction: "none",
+      random: false,
+      straight: false,
+      out_mode: "out",
+      bounce: false
+    }
+
+  },
+
+  interactivity: {
+
+    detect_on: "canvas",
+
+    events: {
+
+      onhover: {
+        enable: true,
+        mode: "grab"
+      },
+
+      onclick: {
+        enable: true,
+        mode: "push"
+      },
+
+      resize: true
+
+    },
+
+    modes: {
+
+      grab: {
+        distance: 200,
+
+        line_linked: {
+          opacity: 0.9
+        }
+      },
+
+      push: {
+        particles_nb: 6
+      }
+
+    }
+
+  },
+
+  retina_detect: true
+
+});
+
+</script>
+
+<footer class="main-footer">
+
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <div>
+
+        <h3>ResumeAI</h3>
+
+        <p>
+          AI-powered resume analysis platform
+          for ATS optimization and career insights.
+        </p>
+
+      </div>
+
+      <div>
+
+        <h4>Developers</h4>
+
+        <p>Aman Raj</p>
+        <p>Ankit Kishor</p>
+        <p>Nitin Sharma</p>
+        <p>Kishan Thakur</p>
+        <p>Final Year Project Team</p>
+
+      </div>
+
+      <div>
+
+        <h4>Links</h4>
+
+        <a href="https://github.com/amanshah-here" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/amanshahhere/" target="_blank">LinkedIn</a>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+      © 2026 ResumeAI — All Rights Reserved
+
+    </div>
+
+  </div>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  </body>
+</html>

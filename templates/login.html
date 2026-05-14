@@ -1,0 +1,405 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<style>
+  .navbar {
+    display: none !important;
+  }
+
+  .main-footer {
+    display: none !important;
+  }
+
+  body {
+    background: #020617;
+    overflow-x: hidden;
+  }
+
+  .auth-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .auth-glow {
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: 0;
+  }
+
+  .glow-1 {
+    background: rgba(37, 99, 235, 0.2);
+    top: -120px;
+    left: -120px;
+  }
+
+  .glow-2 {
+    background: rgba(6, 182, 212, 0.15);
+    bottom: -120px;
+    right: -120px;
+  }
+
+  .auth-card {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    max-width: 1320px;
+
+    min-height: 650px;
+
+    display: grid;
+    grid-template-columns: 58% 42%;
+
+    border-radius: 32px;
+
+    overflow: hidden;
+
+    background: rgba(255, 255, 255, 0.04);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+      0 20px 80px rgba(0, 0, 0, 0.45),
+      0 0 40px rgba(37, 99, 235, 0.08);
+  }
+
+  /* LEFT */
+
+  .auth-left {
+    background: linear-gradient(
+      135deg,
+      rgba(37, 99, 235, 0.18),
+      rgba(6, 182, 212, 0.08)
+    );
+
+    padding: 55px 55px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .auth-badge {
+    display: inline-block;
+
+    width: fit-content;
+
+    background: rgba(37, 99, 235, 0.18);
+
+    color: #60a5fa;
+
+    padding: 12px 22px;
+
+    border-radius: 40px;
+
+    margin-bottom: 30px;
+
+    font-size: 14px;
+
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .auth-left h1 {
+    color: white;
+
+    font-size: 64px;
+
+    font-weight: 800;
+
+    line-height: 1;
+
+    margin-bottom: 30px;
+  }
+
+  .auth-left p {
+    color: #94a3b8;
+
+    font-size: 18px;
+
+    line-height: 1.9;
+
+    max-width: 700px;
+  }
+
+  .feature-list {
+    margin-top: 50px;
+  }
+
+  .feature-list div {
+    color: #cbd5e1;
+
+    margin-bottom: 18px;
+
+    font-size: 18px;
+  }
+
+  .feature-list i {
+    color: #38bdf8;
+
+    margin-right: 14px;
+  }
+
+  /* RIGHT */
+
+  .auth-right {
+    background: linear-gradient(
+      180deg,
+      rgba(5, 10, 25, 0.96),
+      rgba(2, 6, 23, 0.98)
+    );
+
+    padding: 55px 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+  }
+
+  .auth-form-wrapper {
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .logo-box {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 20px;
+  }
+
+  .logo-box i {
+    font-size: 48px;
+
+    color: #38bdf8;
+
+    margin-right: 16px;
+  }
+
+  .logo-box h2 {
+    color: white;
+
+    font-size: 52px;
+
+    font-weight: 800;
+
+    margin: 0;
+  }
+
+  .auth-subtitle {
+    color: #94a3b8;
+
+    margin-bottom: 45px;
+
+    font-size: 20px;
+  }
+
+  .form-control {
+    height: 60px !important;
+
+    background: rgba(255, 255, 255, 0.03) !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+
+    border-radius: 18px !important;
+
+    padding: 0 24px !important;
+
+    color: white !important;
+
+    font-size: 17px;
+
+    margin-bottom: 24px;
+
+    transition: 0.3s ease;
+  }
+
+  .form-control:focus {
+    border-color: #38bdf8 !important;
+
+    box-shadow: 0 0 25px rgba(56, 189, 248, 0.15) !important;
+  }
+
+  .form-control::placeholder {
+    color: #94a3b8;
+  }
+
+  .auth-btn {
+    width: 100%;
+
+    height: 60px;
+
+    border: none;
+
+    border-radius: 18px;
+
+    background: linear-gradient(135deg, #2563eb, #06b6d4);
+
+    color: white;
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    transition: 0.3s ease;
+
+    margin-top: 10px;
+  }
+
+  .auth-btn:hover {
+    transform: translateY(-4px);
+
+    box-shadow: 0 0 35px rgba(56, 189, 248, 0.22);
+  }
+
+  .auth-links {
+    margin-top: 35px;
+  }
+
+  .auth-links p {
+    color: #cbd5e1;
+
+    font-size: 17px;
+  }
+
+  .auth-links a {
+    color: #38bdf8;
+
+    text-decoration: none;
+
+    font-weight: 600;
+  }
+
+  /* RESPONSIVE */
+
+  @media (max-width: 1200px) {
+    .auth-left h1 {
+      font-size: 62px;
+    }
+  }
+
+  @media (max-width: 991px) {
+    body {
+      overflow-y: auto;
+    }
+
+    .auth-section {
+      padding: 20px;
+    }
+
+    .auth-card {
+      grid-template-columns: 1fr;
+
+      min-height: auto;
+    }
+
+    .auth-left {
+      display: none;
+    }
+
+    .auth-right {
+      padding: 50px 30px;
+    }
+
+    .logo-box h2 {
+      font-size: 42px;
+    }
+  }
+</style>
+
+<section class="auth-section">
+  <div class="auth-glow glow-1"></div>
+  <div class="auth-glow glow-2"></div>
+
+  <div class="auth-card">
+    <!-- LEFT -->
+
+    <div class="auth-left">
+      <span class="auth-badge"> AI Powered Resume Platform </span>
+
+      <h1>
+        Welcome <br />
+        Back.
+      </h1>
+
+      <p>
+        Login to access your AI-powered resume dashboard, ATS analysis reports,
+        career insights, and smart recommendations.
+      </p>
+
+      <div class="feature-list">
+        <div>
+          <i class="fa-solid fa-circle-check"></i>
+          ATS Resume Analysis
+        </div>
+
+        <div>
+          <i class="fa-solid fa-circle-check"></i>
+          AI Career Recommendations
+        </div>
+
+        <div>
+          <i class="fa-solid fa-circle-check"></i>
+          Resume Analytics Dashboard
+        </div>
+
+        <div>
+          <i class="fa-solid fa-circle-check"></i>
+          Smart Skill Detection
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+
+    <div class="auth-right">
+      <div class="auth-form-wrapper">
+        <div class="logo-box">
+          <i class="fa-solid fa-brain"></i>
+          <h2>ResumeAI</h2>
+        </div>
+
+        <p class="auth-subtitle">Sign into your account</p>
+
+        <form method="POST">
+          {% csrf_token %}
+
+          <input
+            type="text"
+            name="username"
+            class="form-control"
+            placeholder="Enter Username"
+          />
+
+          <input
+            type="password"
+            name="password"
+            class="form-control"
+            placeholder="Enter Password"
+          />
+
+          <button type="submit" class="auth-btn">Login</button>
+        </form>
+
+        <div class="auth-links">
+          <p>
+            Don't have an account?
+            <a href="{% url 'register' %}"> Register here </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

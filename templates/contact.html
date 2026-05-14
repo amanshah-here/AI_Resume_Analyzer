@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+
+<section class="modern-contact-section">
+
+  <!-- GLOW EFFECTS -->
+
+  <div class="contact-glow glow-one"></div>
+  <div class="contact-glow glow-two"></div>
+
+  <div class="container">
+
+    <div class="modern-contact-wrapper">
+
+      <div class="row align-items-center g-5">
+
+        <!-- LEFT SIDE -->
+
+        <div class="col-lg-5">
+
+          <div class="contact-left-panel">
+
+            <span class="contact-badge">
+              Let's Connect
+            </span>
+
+            <h1>
+              Have Questions?
+              Let's Talk.
+            </h1>
+
+            <p>
+              Reach out for collaborations, feedback,
+              AI project discussions, or technical support.
+            </p>
+
+            <div class="contact-details">
+
+              <div class="contact-item">
+                <i class="fa-solid fa-envelope"></i>
+                <div>
+                  <h5>Email</h5>
+                  <span>amanshah.here@gmail.com</span>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <i class="fa-solid fa-phone"></i>
+                <div>
+                  <h5>Phone</h5>
+                  <span>+91 7492046711</span>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <i class="fa-solid fa-location-dot"></i>
+                <div>
+                  <h5>Location</h5>
+                  <span>India</span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+
+        <div class="col-lg-7">
+
+          <div class="modern-contact-card">
+
+            <div class="card-top">
+
+              <div class="window-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+
+              <h2>Send Message</h2>
+
+            </div>
+
+            <form method="POST">
+
+              {% csrf_token %}
+
+              <div class="row">
+
+                <div class="col-md-6 mb-4">
+                  <label>Full Name</label>
+                  {{ contactform.full_name }}
+                </div>
+
+                <div class="col-md-6 mb-4">
+                  <label>Email Address</label>
+                  {{ contactform.email }}
+                </div>
+
+              </div>
+
+              <div class="mb-4">
+                <label>Phone Number</label>
+                {{ contactform.phone }}
+              </div>
+
+              <div class="mb-4">
+                <label>Your Message</label>
+                {{ contactform.message }}
+              </div>
+
+              <button type="submit" class="modern-submit-btn">
+                Send Message
+              </button>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+{% endblock %}

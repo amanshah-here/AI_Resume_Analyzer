@@ -1,0 +1,358 @@
+{% extends './base.html' %} {% load static %} {% block content %}
+
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center min-vh-100">
+      <!-- LEFT CONTENT -->
+
+      <div class="col-lg-6">
+        <div class="hero-content">
+          <span class="hero-badge"> AI Powered Resume Analysis </span>
+
+          <h1 class="hero-title">
+            <span id="typed-text"></span>
+          </h1>
+
+          <p>
+            Analyze your resume instantly using AI, detect missing skills,
+            improve ATS score, and get personalized recommendations for your
+            dream job.
+          </p>
+
+          <!-- BUTTONS -->
+
+          <div class="hero-buttons">
+            <a href="#" class="btn upload-btn" id="uploadBtn">
+              Upload Resume
+            </a>
+
+            <a href="{% url 'contact' %}" class="btn contact-btn">
+              Contact Us
+            </a>
+          </div>
+
+          <!-- STATS -->
+
+          <div class="hero-stats">
+            <div>
+              <h3>500+</h3>
+              <span>Resumes Analyzed</span>
+            </div>
+
+            <div>
+              <h3>95%</h3>
+              <span>ATS Accuracy</span>
+            </div>
+
+            <div>
+              <h3>10+</h3>
+              <span>Tech Skills</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT CONTENT -->
+
+      <div class="col-lg-6">
+        <div class="hero-image-wrapper">
+          <div class="resume-card">
+            <div class="resume-header">
+              <div class="circle red"></div>
+              <div class="circle yellow"></div>
+              <div class="circle green"></div>
+            </div>
+
+            <h2>Resume Analysis</h2>
+
+            <!-- SCORE -->
+
+            <div class="score-card">
+              <div class="score-circle">87%</div>
+
+              <div>
+                <h4>ATS Score</h4>
+                <p>Excellent Resume Match</p>
+              </div>
+            </div>
+
+            <!-- SKILLS -->
+
+            <div class="skills-section">
+              <h5>Detected Skills</h5>
+
+              <div class="skills">
+                <span>Python</span>
+                <span>Django</span>
+                <span>SQL</span>
+                <span>React</span>
+                <span>Machine Learning</span>
+                <span>Git</span>
+              </div>
+            </div>
+
+            <!-- AI SUGGESTIONS -->
+
+            <div class="suggestion-box">
+              <h5>AI Suggestions</h5>
+
+              <ul>
+                <li>Add more backend projects</li>
+                <li>Improve keyword optimization</li>
+                <li>Include certifications section</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+
+<section class="features-section">
+  <div class="container">
+    <div class="section-title">
+      <h2>Powerful Features</h2>
+
+      <p>
+        Smart AI-powered tools to optimize your resume and increase hiring
+        chances.
+      </p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="feature-card">
+          <i class="fa-solid fa-chart-line"></i>
+
+          <h4>ATS Score Analysis</h4>
+
+          <p>Analyze resume compatibility with ATS systems.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="feature-card">
+          <i class="fa-solid fa-brain"></i>
+
+          <h4>AI Suggestions</h4>
+
+          <p>Get smart resume improvement recommendations.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="feature-card">
+          <i class="fa-solid fa-code"></i>
+
+          <h4>Skill Detection</h4>
+
+          <p>Detect technical skills from uploaded resumes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+
+<section class="steps-section">
+  <div class="container">
+    <div class="section-title">
+      <h2>How It Works</h2>
+    </div>
+
+    <div class="row text-center g-4">
+      <div class="col-lg-4">
+        <div class="step-card">
+          <div class="step-number">1</div>
+
+          <h4>Upload Resume</h4>
+
+          <p>Upload your PDF resume securely.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="step-card">
+          <div class="step-number">2</div>
+
+          <h4>AI Processing</h4>
+
+          <p>AI analyzes skills, keywords & ATS quality.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="step-card">
+          <div class="step-number">3</div>
+
+          <h4>Get Insights</h4>
+
+          <p>Receive score, suggestions & improvements.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+
+<section class="team-section">
+  <div class="container">
+    <div class="section-heading text-center">
+      <span class="team-badge"> Final Year Project Team </span>
+
+      <h2>Meet The Developers</h2>
+
+      <p>The developers behind the AI Resume Analyzer project.</p>
+    </div>
+
+    <div class="row g-4 mt-4">
+      <div class="col-lg-3 col-md-6">
+        <div class="team-card">
+          <img src="{% static 'images/Aman.jpeg' %}" alt="Aman Raj" />
+
+          <div class="team-content">
+            <h4>Aman Raj</h4>
+
+            <span>Full Stack Developer</span>
+
+            <p>
+              Built frontend UI, backend integration, AI resume analysis system
+              and ATS scoring.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="team-card">
+          <img src="{% static 'images/Ankit.jpeg' %}" alt="Ankit Kishor" />
+
+          <div class="team-content">
+            <h4>Ankit Kishor</h4>
+
+            <span>Backend Developer</span>
+
+            <p>
+              Worked on database management, authentication and API handling.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="team-card">
+          <img src="{% static 'images/Nitin.jpeg' %}" alt="Nitin Sharma" />
+
+          <div class="team-content">
+            <h4>Nitin Sharma</h4>
+
+            <span>UI/UX Designer</span>
+
+            <p>Designed responsive layouts, animations and user experience.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="team-card">
+          <img src="{% static 'images/Kishan.jpeg' %}" alt="Kishan Thakur" />
+
+          <div class="team-content">
+            <h4>Kishan Thakur</h4>
+
+            <span>AI Integration</span>
+
+            <p>
+              Implemented AI suggestions, resume parsing and smart
+              recommendations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SWEET ALERT -->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- TYPED JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    /* =========================
+       TYPED JS
+    ========================== */
+
+    const typedElement = document.getElementById("typed-text");
+
+    if (typedElement) {
+      new Typed("#typed-text", {
+        strings: [
+          "Build ATS-Friendly Resumes With AI Precision",
+          "Optimize Your Resume With AI",
+          "Boost Your ATS Score Instantly",
+          "Get Smarter Career Insights",
+        ],
+
+        typeSpeed: 55,
+        backSpeed: 30,
+        backDelay: 1800,
+        startDelay: 500,
+        loop: true,
+        smartBackspace: true,
+        showCursor: true,
+        cursorChar: "|",
+      });
+    }
+
+    /* =========================
+       UPLOAD BUTTON LOGIN CHECK
+    ========================== */
+
+    const uploadBtn = document.getElementById("uploadBtn");
+
+    uploadBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      const isAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}";
+
+      if (isAuthenticated === "true") {
+        window.location.href = "{% url 'upload' %}";
+      } else {
+        Swal.fire({
+          title: "Login Required",
+          text: "Please login first to upload your resume.",
+
+          icon: "warning",
+
+          background: "#071739",
+
+          color: "#ffffff",
+
+          confirmButtonColor: "#1ea7ff",
+
+          confirmButtonText: "Login Now",
+
+          backdrop: `
+                    rgba(0,0,0,0.8)
+                `,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "{% url 'login' %}";
+          }
+        });
+      }
+    });
+  });
+</script>
+
+{% endblock %}

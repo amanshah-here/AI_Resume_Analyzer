@@ -1,0 +1,516 @@
+{% extends './base.html' %} {% load static %} {% block content %}
+
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+<section class="dashboard-section">
+  <div class="dashboard-glow glow-left"></div>
+  <div class="dashboard-glow glow-right"></div>
+
+  <div class="container">
+    <!-- HEADER -->
+
+    <div class="dashboard-header" data-aos="fade-down">
+      <div>
+        <span class="dashboard-badge"> AI Resume Analysis </span>
+
+        <h1>Resume Analytics Dashboard</h1>
+      </div>
+
+      <a href="{% url 'upload' %}" class="upload-new-btn">
+        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+        Upload Resume
+      </a>
+    </div>
+
+    {% if not skills %}
+
+    <!-- EMPTY STATE -->
+
+    <div class="empty-dashboard" data-aos="zoom-in">
+      <img src="https://cdn-icons-png.flaticon.com/512/7486/7486740.png" />
+
+      <h2>Upload a Resume to Start AI Analysis</h2>
+
+      <p>
+        Analyze ATS score, detect skills, predict job roles, and get smart
+        recruiter recommendations.
+      </p>
+
+      <a href="{% url 'upload' %}" class="upload-new-btn"> Upload Resume </a>
+    </div>
+
+    {% else %}
+
+    <!-- TOP GRID -->
+
+    <div class="row g-4">
+      <!-- ATS -->
+
+      <div class="col-lg-4" data-aos="fade-up">
+        <div class="dashboard-card text-center h-100">
+          <h4>ATS Compatibility</h4>
+
+          <div class="ats-circle" style="--score: {{ score }}%;">
+            <div class="inner-circle">
+              <h2 class="counter" data-target="{{ score }}">0</h2>
+
+              <span>ATS Match</span>
+            </div>
+          </div>
+
+          {% if score >= 85 %}
+
+          <div class="excellent-score">Excellent ATS Strength</div>
+
+          {% elif score >= 70 %}
+
+          <div class="good-score">Good ATS Compatibility</div>
+
+          {% else %}
+
+          <div class="weak-score">Resume Needs Improvements</div>
+
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- ROLE -->
+
+      <div class="col-lg-4" data-aos="fade-up">
+        <div class="dashboard-card h-100">
+          <h4>Predicted Career Role</h4>
+
+          <div class="role-box mt-4">
+            {{ role|default:"Full Stack Developer" }}
+          </div>
+
+          <p class="mt-4 role-description">
+            AI predicted your strongest career role based on ATS keywords,
+            skills, projects, and technical stack.
+          </p>
+        </div>
+      </div>
+
+      <!-- SKILLS -->
+
+      <div class="col-lg-4" data-aos="fade-up">
+        <div class="dashboard-card h-100">
+          <h4>Detected Skills</h4>
+
+          <div class="skills-container mt-4">
+            {% for skill in skills %}
+
+            <span>{{ skill }}</span>
+
+            {% empty %}
+
+            <span>Python</span>
+            <span>Django</span>
+            <span>SQL</span>
+
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN ANALYTICS GRID -->
+
+    <div class="row g-4 mt-2">
+      <!-- LEFT -->
+
+      <div class="col-lg-8">
+        <!-- AI REPORT -->
+
+        <div class="dashboard-card mb-4" data-aos="fade-right">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3>
+              <i class="fa-solid fa-robot"></i>
+              AI Resume Insights
+            </h3>
+
+            <span class="analytics-badge"> Recruiter Analysis </span>
+          </div>
+
+          <div class="analysis-content">{{ ai_output|safe }}</div>
+        </div>
+
+        <!-- RECOMMENDATIONS -->
+
+        <div class="dashboard-card" data-aos="fade-up">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3>
+              <i class="fa-solid fa-lightbulb"></i>
+              Smart Recommendations
+            </h3>
+
+            <span class="analytics-badge"> AI Suggestions </span>
+          </div>
+
+          <div class="suggestion-grid">
+            {% for suggestion in suggestions %}
+
+            <div class="suggestion-card">
+              <div class="suggestion-top">
+                <div class="suggestion-icon">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+
+                <div class="priority-badge">{{ suggestion.priority }}</div>
+              </div>
+
+              <h4>{{ suggestion.title }}</h4>
+
+              <p>{{ suggestion.text }}</p>
+            </div>
+
+            {% empty %}
+
+            <div class="suggestion-card">
+              <div class="suggestion-top">
+                <div class="suggestion-icon">
+                  <i class="fa-solid fa-lightbulb"></i>
+                </div>
+
+                <div class="priority-badge">HIGH PRIORITY</div>
+              </div>
+
+              <h4>Add More Projects</h4>
+
+              <p>
+                Add real-world projects with measurable impact to improve
+                recruiter confidence and ATS score.
+              </p>
+            </div>
+
+            <div class="suggestion-card">
+              <div class="suggestion-top">
+                <div class="suggestion-icon">
+                  <i class="fa-solid fa-code"></i>
+                </div>
+
+                <div class="priority-badge">MEDIUM PRIORITY</div>
+              </div>
+
+              <h4>Improve Backend Stack</h4>
+
+              <p>
+                Add Django, REST APIs, authentication, and deployment experience
+                to strengthen profile.
+              </p>
+            </div>
+
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+
+      <div class="col-lg-4">
+        <!-- RADAR -->
+
+        <div class="dashboard-card mb-4" data-aos="fade-left">
+          <h3 class="mb-4">
+            <i class="fa-solid fa-chart-simple"></i>
+
+            Resume Analytics
+          </h3>
+
+          <canvas id="skillsChart"></canvas>
+        </div>
+
+        <!-- DOUGHNUT -->
+
+        <div class="dashboard-card mb-4" data-aos="fade-left">
+          <h3 class="mb-4">
+            <i class="fa-solid fa-chart-pie"></i>
+
+            ATS Breakdown
+          </h3>
+
+          <canvas id="atsBreakdownChart"></canvas>
+        </div>
+
+        <!-- QUICK INSIGHTS -->
+
+        <div class="dashboard-card mb-4" data-aos="fade-left">
+          <h3 class="mb-4">
+            <i class="fa-solid fa-bolt"></i>
+
+            Quick Insights
+          </h3>
+
+          <div class="insight-item">
+            <span>ATS Score</span>
+            <strong>{{ score }}%</strong>
+          </div>
+
+          <div class="insight-item">
+            <span>Skills Found</span>
+            <strong>{{ skills|length }}</strong>
+          </div>
+
+          <div class="insight-item">
+            <span>Suggestions</span>
+            <strong>{{ suggestions|length }}</strong>
+          </div>
+
+          <div class="insight-item">
+            <span>Best Role : </span>
+            <strong>{{ role }}</strong>
+          </div>
+        </div>
+
+        <!-- HISTORY -->
+
+        <div class="dashboard-card history-card-main" data-aos="fade-up">
+
+    <div class="card-header-row">
+        <h3>
+            <i class="fa-solid fa-rotate-left"></i>
+            Resume History
+        </h3>
+
+        <span class="history-count">
+            {{ resume_history|length }} Uploads
+        </span>
+    </div>
+
+    {% if resume_history %}
+
+    <div class="compact-history">
+
+    {% for item in resume_history %}
+
+    <div class="compact-history-item">
+
+        <div class="compact-top">
+
+            <div class="compact-file">
+                <i class="fa-solid fa-file-lines"></i>
+
+                <div>
+                    <h4>{{ item.filename|truncatechars:18 }}</h4>
+                    <p>{{ item.predicted_role }}</p>
+                </div>
+            </div>
+
+            <div class="compact-score">
+                {{ item.ats_score }}%
+            </div>
+
+        </div>
+
+        <div class="compact-date">
+            {{ item.uploaded_at|date:"M d • h:i A" }}
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+    {% else %}
+
+    <div class="empty-history">
+
+        <i class="fa-solid fa-folder-open"></i>
+
+        <h4>No Resume History</h4>
+
+        <p>Upload resumes to build your analysis history.</p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+      </div>
+    </div>
+
+    {% endif %}
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+
+  AOS.init({
+      duration: 900,
+      once: true
+  });
+
+  /* COUNTERS */
+
+  document.querySelectorAll(".counter").forEach(counter => {
+
+      const updateCounter = () => {
+
+          const target = +counter.dataset.target;
+          const count = +counter.innerText;
+
+          const increment = target / 80;
+
+          if(count < target){
+
+              counter.innerText =
+                  Math.ceil(count + increment);
+
+              setTimeout(updateCounter,20);
+
+          }else{
+
+              counter.innerText = target;
+
+          }
+
+      };
+
+      updateCounter();
+
+  });
+
+  /* CHARTS */
+
+  const radar = document.getElementById("skillsChart");
+
+  if(radar){
+
+  new Chart(radar, {
+
+      type: "radar",
+
+      data: {
+
+          labels: [
+              "Frontend",
+              "Backend",
+              "Projects",
+              "ATS",
+              "Database",
+              "Skills"
+          ],
+
+          datasets: [{
+
+              label: "Resume Strength",
+
+              data: [82,88,74,{{ score }},76,90],
+
+              backgroundColor: "rgba(37,99,235,0.2)",
+
+              borderColor: "#06b6d4",
+
+              borderWidth: 3,
+
+              pointBackgroundColor: "#38bdf8"
+
+          }]
+
+      },
+
+      options: {
+
+          responsive: true,
+
+          scales: {
+
+              r: {
+
+                  suggestedMin: 0,
+                  suggestedMax: 100,
+
+                  grid: {
+                      color: "rgba(255,255,255,0.08)"
+                  },
+
+                  angleLines: {
+                      color: "rgba(255,255,255,0.08)"
+                  },
+
+                  pointLabels: {
+                      color: "white"
+                  },
+
+                  ticks: {
+                      display: false
+                  }
+
+              }
+
+          },
+
+          plugins: {
+
+              legend: {
+
+                  labels: {
+                      color: "white"
+                  }
+
+              }
+
+          }
+
+      }
+
+  });
+
+  }
+
+  const doughnut = document.getElementById("atsBreakdownChart");
+
+  if(doughnut){
+
+  new Chart(doughnut, {
+
+      type: "doughnut",
+
+      data: {
+
+          labels: [
+              "Formatting",
+              "Keywords",
+              "Projects",
+              "Skills"
+          ],
+
+          datasets: [{
+
+              data: [85,74,61,92],
+
+              borderWidth: 0
+
+          }]
+
+      },
+
+      options: {
+
+          responsive: true,
+
+          plugins: {
+
+              legend: {
+
+                  labels: {
+                      color: "white"
+                  }
+
+              }
+
+          }
+
+      }
+
+  });
+
+  }
+</script>
+
+{% endblock %}
