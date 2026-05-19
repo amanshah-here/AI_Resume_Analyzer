@@ -10,4 +10,7 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('donate/', views.donate, name='donate'),
     path('portfolio/', views.portfolio, name='portfolio'),
+    path('admin-dashboard/', views.admin_dashboard, name="admin_dashboard"),
+    path("donate/", views.donate, name="donate"),
+path("payment-success/", views.payment_success, name="payment_success"),
 ]

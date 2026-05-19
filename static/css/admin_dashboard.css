@@ -1,0 +1,101 @@
+body {
+  background: #020617;
+
+  color: white;
+}
+
+.admin-section {
+  padding: 60px 0;
+}
+
+.admin-header {
+  margin-bottom: 40px;
+}
+
+.admin-badge {
+  background: rgba(37, 99, 235, 0.15);
+
+  color: #38bdf8;
+
+  padding: 8px 18px;
+
+  border-radius: 30px;
+
+  font-size: 14px;
+}
+
+.admin-header h1 {
+  margin-top: 20px;
+
+  font-size: 52px;
+
+  font-weight: 800;
+}
+
+.stats-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 25px;
+}
+
+.stats-card {
+  background: rgba(255, 255, 255, 0.04);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 24px;
+
+  padding: 30px;
+
+  text-align: center;
+}
+
+.stats-card h2 {
+  font-size: 52px;
+
+  font-weight: 800;
+
+  margin-bottom: 10px;
+}
+
+.stats-card p {
+  color: #94a3b8;
+}
+
+.dashboard-card {
+  background: rgba(255, 255, 255, 0.04);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 24px;
+
+  padding: 30px;
+}
+
+.admin-table {
+  color: white;
+}
+
+.admin-table th {
+  color: #38bdf8;
+
+  border: none;
+
+  padding: 18px;
+}
+
+.admin-table td {
+  border-color: rgba(255, 255, 255, 0.08);
+
+  padding: 18px;
+}
+
+.score-badge {
+  background: linear-gradient(135deg, #2563eb, #06b6d4);
+
+  padding: 8px 16px;
+
+  border-radius: 30px;
+}

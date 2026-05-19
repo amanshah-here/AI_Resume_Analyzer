@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div style="
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#020617;
+color:white;
+flex-direction:column;
+">
+
+    <div style="
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:50px;
+
+    margin-bottom:30px;
+    ">
+
+        ✓
+
+    </div>
+
+    <h1 style="font-size:48px;font-weight:800;">
+
+        Payment Successful
+
+    </h1>
+
+    <p style="
+    color:#94a3b8;
+    margin-top:15px;
+    font-size:18px;
+    ">
+
+        Thank you for supporting this project ❤️
+
+    </p>
+
+    <a href="/"
+    style="
+    margin-top:30px;
+    background:linear-gradient(135deg,#2563eb,#06b6d4);
+    color:white;
+    padding:14px 24px;
+    border-radius:14px;
+    text-decoration:none;
+    ">
+
+        Back To Home
+
+    </a>
+
+</div>
+
+{% endblock %}

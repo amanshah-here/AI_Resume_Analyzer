@@ -1,0 +1,127 @@
+<!doctype html>
+
+<html>
+  <head>
+    <title>Processing Payment</title>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  </head>
+
+  <body
+    style="
+      background: #020617;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      font-family: sans-serif;
+    "
+  >
+    <div style="text-align: center">
+      <div
+        style="
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+          border: 6px solid rgba(255, 255, 255, 0.1);
+          border-top: 6px solid #38bdf8;
+
+          animation: spin 1s linear infinite;
+
+          margin: auto;
+          margin-bottom: 30px;
+        "
+      ></div>
+
+      <h1 style="font-size: 42px; font-weight: 800; margin-bottom: 15px">
+        Initializing Secure Payment
+      </h1>
+
+      <p style="color: #94a3b8; font-size: 18px">
+        Please wait while Razorpay opens...
+      </p>
+    </div>
+
+    <style>
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+
+    <script>
+      var options = {
+        key: "{{ razorpay_key }}",
+
+        amount: "{{ payment.amount }}",
+
+        currency: "INR",
+
+        name: "AI Resume Analyzer",
+
+        description: "Project Donation",
+
+        order_id: "{{ payment.id }}",
+
+        method: {
+          upi: true,
+          card: true,
+          netbanking: true,
+          wallet: true,
+        },
+
+        handler: function (response) {
+          var form = document.createElement("form");
+
+          form.method = "POST";
+
+          form.action = "/payment-success/";
+
+          var fields = {
+            razorpay_payment_id: response.razorpay_payment_id,
+
+            razorpay_order_id: response.razorpay_order_id,
+
+            razorpay_signature: response.razorpay_signature,
+          };
+
+          for (var key in fields) {
+            var input = document.createElement("input");
+
+            input.type = "hidden";
+
+            input.name = key;
+
+            input.value = fields[key];
+
+            form.appendChild(input);
+          }
+
+          document.body.appendChild(form);
+
+          form.submit();
+        },
+
+        prefill: {
+          name: "{{ name }}",
+        },
+
+        theme: {
+          color: "#2563eb",
+        },
+      };
+
+      var rzp1 = new Razorpay(options);
+
+      window.onload = function () {
+        rzp1.open();
+      };
+    </script>
+  </body>
+</html>

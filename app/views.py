@@ -633,5 +633,216 @@ def logout_view(request):
 # DONATE
 # =========================
 
+# def donate(request):
+#     return render(request, 'donate.html')
+
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.models import User
+from .models import ResumeHistory
+
+
+@staff_member_required
+def admin_dashboard(request):
+
+    users = User.objects.all().order_by('-date_joined')
+
+    resumes = ResumeHistory.objects.all().order_by('-uploaded_at')
+
+    total_users = users.count()
+
+    total_uploads = resumes.count()
+
+    average_score = 0
+
+    if resumes.exists():
+
+        average_score = int(
+            sum(r.ats_score for r in resumes) / resumes.count()
+        )
+
+    top_scores = resumes.order_by('-ats_score')[:5]
+
+    latest_uploads = resumes.order_by('-uploaded_at')[:5]
+
+    context = {
+
+        'users': users,
+
+        'resumes': resumes,
+
+        'total_users': total_users,
+
+        'total_uploads': total_uploads,
+
+        'average_score': average_score,
+
+        'top_scores': top_scores,
+
+        'latest_uploads': latest_uploads,
+
+    }
+
+    return render(
+        request,
+        'admin_dashboard.html',
+        context
+    )
+import razorpay
+
+from django.conf import settings
+
+from django.shortcuts import (
+    render,
+    redirect,
+    get_object_or_404
+)
+
+from django.views.decorators.csrf import csrf_exempt
+
+from .models import Donation
+
+
+# =========================
+# DONATE VIEW
+# =========================
+
 def donate(request):
-    return render(request, 'donate.html')
+
+    if request.method == "POST":
+
+        name = request.POST.get("name")
+
+        amount = int(request.POST.get("amount")) * 100
+
+        client = razorpay.Client(
+            auth=(
+                settings.RAZORPAY_KEY_ID,
+                settings.RAZORPAY_KEY_SECRET
+            )
+        )
+
+        payment = client.order.create({
+
+            "amount": amount,
+
+            "currency": "INR",
+
+            "payment_capture": "1"
+
+        })
+
+        donation = Donation.objects.create(
+
+            user=request.user
+            if request.user.is_authenticated
+            else None,
+
+            name=name,
+
+            amount=amount // 100,
+
+            razorpay_order_id=payment["id"]
+
+        )
+
+        context = {
+
+            "payment": payment,
+
+            "donation": donation,
+
+            "razorpay_key":
+            settings.RAZORPAY_KEY_ID,
+
+            "amount": amount,
+
+            "name": name,
+
+        }
+
+        return render(
+            request,
+            "payment.html",
+            context
+        )
+
+    return render(request, "donate.html")
+
+
+# =========================
+# PAYMENT SUCCESS
+# =========================
+
+@csrf_exempt
+def payment_success(request):
+
+    if request.method == "POST":
+
+        client = razorpay.Client(
+            auth=(
+                settings.RAZORPAY_KEY_ID,
+                settings.RAZORPAY_KEY_SECRET
+            )
+        )
+
+        razorpay_payment_id = request.POST.get(
+            "razorpay_payment_id"
+        )
+
+        razorpay_order_id = request.POST.get(
+            "razorpay_order_id"
+        )
+
+        razorpay_signature = request.POST.get(
+            "razorpay_signature"
+        )
+
+        params_dict = {
+
+            'razorpay_order_id':
+            razorpay_order_id,
+
+            'razorpay_payment_id':
+            razorpay_payment_id,
+
+            'razorpay_signature':
+            razorpay_signature
+
+        }
+
+        try:
+
+            client.utility.verify_payment_signature(
+                params_dict
+            )
+
+            donation = get_object_or_404(
+
+                Donation,
+
+                razorpay_order_id=
+                razorpay_order_id
+
+            )
+
+            donation.razorpay_payment_id = (
+                razorpay_payment_id
+            )
+
+            donation.paid = True
+
+            donation.save()
+
+            return render(
+                request,
+                "success.html"
+            )
+
+        except:
+
+            return render(
+                request,
+                "failed.html"
+            )
+
+    return redirect("donate")
