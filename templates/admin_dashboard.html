@@ -107,6 +107,71 @@
         </table>
       </div>
     </div>
+
+    <!-- DONATION ANALYTICS -->
+
+    <div class="dashboard-card mt-5">
+      <h3 class="mb-4">Donation Analytics</h3>
+
+      <div class="stats-grid mb-4">
+        <div class="stats-card">
+          <h2>{{ total_donations }}</h2>
+          <p>Total Donations</p>
+        </div>
+
+        <div class="stats-card">
+          <h2>{{ successful_payments }}</h2>
+          <p>Successful Payments</p>
+        </div>
+
+        <div class="stats-card">
+          <h2>₹{{ revenue }}</h2>
+          <p>Total Revenue</p>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table admin-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Payment ID</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for donation in recent_donations %}
+
+            <tr>
+              <td>{{ donation.name }}</td>
+
+              <td>₹{{ donation.amount }}</td>
+
+              <td>
+                {% if donation.paid %}
+
+                <span class="score-badge"> Paid </span>
+
+                {% else %}
+
+                <span class="pending-badge"> Pending </span>
+
+                {% endif %}
+              </td>
+
+              <td>
+                {% if donation.razorpay_payment_id %} {{
+                donation.razorpay_payment_id }} {% else %} Not Paid {% endif %}
+              </td>
+            </tr>
+
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </section>
 

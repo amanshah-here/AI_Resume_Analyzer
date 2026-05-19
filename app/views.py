@@ -519,18 +519,22 @@ def portfolio(request):
 # =========================
 # LOGIN
 # =========================
-
 def login(request):
 
     if request.method == "POST":
 
         username = request.POST.get('username')
+
         password = request.POST.get('password')
 
         user = authenticate(
+
             request,
+
             username=username,
+
             password=password
+
         )
 
         if user is not None:
@@ -538,23 +542,45 @@ def login(request):
             auth_login(request, user)
 
             messages.success(
+
                 request,
+
                 "Login successful"
+
             )
 
-            return redirect('home')
+            # =====================
+            # ROLE BASED REDIRECT
+            # =====================
+
+            if user.is_staff:
+
+                return redirect(
+                    'admin_dashboard'
+                )
+
+            else:
+
+                return redirect(
+                    'home'
+                )
 
         else:
 
             messages.error(
+
                 request,
+
                 "Invalid credentials"
+
             )
 
             return redirect('login')
 
-    return render(request, 'login.html')
-
+    return render(
+        request,
+        'login.html'
+    )
 
 # =========================
 # REGISTER
@@ -638,7 +664,7 @@ def logout_view(request):
 
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models import User
-from .models import ResumeHistory
+from .models import ResumeHistory, Donation
 
 
 @staff_member_required
@@ -664,6 +690,25 @@ def admin_dashboard(request):
 
     latest_uploads = resumes.order_by('-uploaded_at')[:5]
 
+    # =========================
+    # DONATION ANALYTICS
+    # =========================
+
+    total_donations = Donation.objects.count()
+
+    successful_payments = Donation.objects.filter(
+        paid=True
+    ).count()
+
+    revenue = sum(
+        donation.amount
+        for donation in Donation.objects.filter(paid=True)
+    )
+
+    recent_donations = Donation.objects.order_by(
+        '-id'
+    )[:5]
+
     context = {
 
         'users': users,
@@ -680,6 +725,15 @@ def admin_dashboard(request):
 
         'latest_uploads': latest_uploads,
 
+        # DONATION DATA
+
+        'total_donations': total_donations,
+
+        'successful_payments': successful_payments,
+
+        'revenue': revenue,
+
+        'recent_donations': recent_donations,
     }
 
     return render(
